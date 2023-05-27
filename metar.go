@@ -94,7 +94,7 @@ func NewMETAR(inputtext string) (*MetarMessage, error) {
 	m.Auto = headermap["auto"] != ""
 	m.NIL = headermap["nil"] != ""
 	if m.Station == "" && m.DateTime.IsZero() {
-		return m, fmt.Errorf("Not valid message in input")
+		return m, fmt.Errorf("not valid message in input")
 	}
 	if m.NIL {
 		return m, nil
