@@ -19,7 +19,7 @@ func TestParseTrendData(t *testing.T) {
 			input = []string{"BECMG", "2526/2526", "0500", "FG"}
 			expected = &Trend{Type: BECMG,
 				Visibility: getVis([]string{"0500"}),
-				Phenomena:  []phenomena.Phenomenon{phenomena.Phenomenon{Vicinity: false, Abbreviation: "FG", Intensity: ""}},
+				Phenomena:  []phenomena.Phenomenon{{Vicinity: false, Abbreviation: "FG", Intensity: ""}},
 			}
 			So(parseTrendData(input), ShouldResemble, expected)
 		})
@@ -48,7 +48,7 @@ func TestParseTrendData(t *testing.T) {
 				FM:                 time.Date(curYear, curMonth, 25, 9, 0, 0, 0, time.UTC),
 				TL:                 time.Date(curYear, curMonth, 25, 15, 0, 0, 0, time.UTC),
 				Visibility:         getVis([]string{"0500"}),
-				Phenomena:          []phenomena.Phenomenon{phenomena.Phenomenon{Vicinity: false, Abbreviation: "FG", Intensity: ""}},
+				Phenomena:          []phenomena.Phenomenon{{Vicinity: false, Abbreviation: "FG", Intensity: ""}},
 				VerticalVisibility: 300,
 			}
 			So(parseTrendData(input), ShouldResemble, expected)
@@ -60,7 +60,7 @@ func TestParseTrendData(t *testing.T) {
 				FM:         time.Date(curYear, curMonth, 25, 6, 0, 0, 0, time.UTC),
 				TL:         time.Date(curYear, curMonth, 25, 12, 0, 0, 0, time.UTC),
 				Visibility: getVis([]string{"3100"}),
-				Phenomena:  []phenomena.Phenomenon{phenomena.Phenomenon{Vicinity: false, Abbreviation: "SHRA", Intensity: "-"}, phenomena.Phenomenon{Vicinity: false, Abbreviation: "BR", Intensity: ""}},
+				Phenomena:  []phenomena.Phenomenon{{Vicinity: false, Abbreviation: "SHRA", Intensity: "-"}, {Vicinity: false, Abbreviation: "BR", Intensity: ""}},
 				Clouds:     []clouds.Cloud{getCloud("BKN005"), getCloud("OVC020CB")},
 			}
 			So(parseTrendData(input), ShouldResemble, expected)
