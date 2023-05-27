@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/urkk/metar.svg?branch=master)](https://travis-ci.org/urkk/metar)
-[![Coverage](https://codecov.io/gh/urkk/metar/branch/master/graph/badge.svg)](https://codecov.io/gh/urkk/metar)
+[![Build Status](https://travis-ci.org/vasya4k/metar.svg?branch=master)](https://travis-ci.org/vasya4k/metar)
+[![Coverage](https://codecov.io/gh/vasya4k/metar/branch/master/graph/badge.svg)](https://codecov.io/gh/vasya4k/metar)
 # METAR
 METAR (METeorological Aerodrome Report) and TAF (terminal aerodrome forecast) message decoder for use in bots, templates and other data visualization. Raw text messages (as is) are used for decoding.
 
@@ -43,7 +43,7 @@ Based on the format approved by The Federal Service for Hydrometeorology and Env
     import (
         "fmt"
 
-        "github.com/urkk/metar"
+        "github.com/vasya4k/metar"
     )
 
     msg, err := metar.NewMETAR("URSS 220630Z 02003MPS 9999 -SHRA SCT050CB OVC086 20/16 Q1015 R02/290060 R06/290060 TEMPO -TSRA BKN030CB RMK R06/03002MPS QFE760")

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
-	. "github.com/urkk/metar/conversion"
+	. "github.com/vasya4k/metar/conversion"
 )
 
 func TestParseWind(t *testing.T) {

@@ -6,11 +6,11 @@ import (
 	"time"
 
 	//	. "github.com/smartystreets/goconvey/convey"
-	"github.com/urkk/metar/clouds"
-	. "github.com/urkk/metar/phenomena"
-	"github.com/urkk/metar/runways"
-	v "github.com/urkk/metar/visibility"
-	"github.com/urkk/metar/wind"
+	"github.com/vasya4k/metar/clouds"
+	. "github.com/vasya4k/metar/phenomena"
+	"github.com/vasya4k/metar/runways"
+	v "github.com/vasya4k/metar/visibility"
+	"github.com/vasya4k/metar/wind"
 )
 
 var curYear = time.Now().Year()

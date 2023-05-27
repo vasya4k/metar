@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
-	. "github.com/urkk/metar/visibility"
+	. "github.com/vasya4k/metar/visibility"
 )
 
 func TestParseVisibility(t *testing.T) {

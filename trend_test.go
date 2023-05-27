@@ -5,8 +5,8 @@ import (
 	"time"
 
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/urkk/metar/clouds"
-	"github.com/urkk/metar/phenomena"
+	"github.com/vasya4k/metar/clouds"
+	"github.com/vasya4k/metar/phenomena"
 )
 
 func TestParseTrendData(t *testing.T) {

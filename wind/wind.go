@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
-	cnv "github.com/urkk/metar/conversion"
+	cnv "github.com/vasya4k/metar/conversion"
 )
 
 type speedUnit string

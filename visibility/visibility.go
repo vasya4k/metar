@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	cnv "github.com/urkk/metar/conversion"
+	cnv "github.com/vasya4k/metar/conversion"
 )
 
 // Unit of measurement.

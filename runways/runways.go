@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
-	vis "github.com/urkk/metar/visibility"
+	vis "github.com/vasya4k/metar/visibility"
 )
 
 // VRTendency - average runway visual range tendency

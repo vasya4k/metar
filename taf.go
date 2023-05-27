@@ -6,10 +6,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/urkk/metar/clouds"
-	ph "github.com/urkk/metar/phenomena"
-	v "github.com/urkk/metar/visibility"
-	"github.com/urkk/metar/wind"
+	"github.com/vasya4k/metar/clouds"
+	ph "github.com/vasya4k/metar/phenomena"
+	v "github.com/vasya4k/metar/visibility"
+	"github.com/vasya4k/metar/wind"
 )
 
 // TemperatureForecast - Forecast Max and Min temperature

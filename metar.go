@@ -8,12 +8,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/urkk/metar/clouds"
-	cnv "github.com/urkk/metar/conversion"
-	ph "github.com/urkk/metar/phenomena"
-	rwy "github.com/urkk/metar/runways"
-	vis "github.com/urkk/metar/visibility"
-	"github.com/urkk/metar/wind"
+	"github.com/vasya4k/metar/clouds"
+	cnv "github.com/vasya4k/metar/conversion"
+	ph "github.com/vasya4k/metar/phenomena"
+	rwy "github.com/vasya4k/metar/runways"
+	vis "github.com/vasya4k/metar/visibility"
+	"github.com/vasya4k/metar/wind"
 )
 
 // CurYearStr - year of message. By default read all messages in the current date. Can be redefined if necessary

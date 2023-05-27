@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/urkk/metar/wind"
+	"github.com/vasya4k/metar/wind"
 )
 
 // Remark - Additional information not included in the main message
