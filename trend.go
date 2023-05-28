@@ -1,7 +1,6 @@
 package metar
 
 import (
-	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -131,26 +130,26 @@ func (trend *Trend) setProbability(input string) bool {
 	return false
 }
 
-func (trend *Trend) setPeriodOfChanges(input string) (ok bool) {
-	fmt.Println(input)
-	switch input[0:2] {
-	case "AT":
+func (trend *Trend) setPeriodOfChanges(input string) bool {
+	if strings.HasPrefix(input, "AT") {
 		timeofaction, err := time.Parse("200601021504", CurYearStr+CurMonthStr+CurDayStr+input[2:])
 		if err == nil {
 			trend.AT = timeofaction
-			ok = true
+			return true
 		} else {
 			log.Println(err)
 		}
-	case "FM":
+	}
+	if strings.HasPrefix(input, "FM") {
 		timeofaction, err := time.Parse("200601021504", CurYearStr+CurMonthStr+CurDayStr+input[2:])
 		if err == nil {
 			trend.FM = timeofaction
-			ok = true
+			return true
 		} else {
 			log.Println(err)
 		}
-	case "TL":
+	}
+	if strings.HasPrefix(input, "TL") {
 		var t time.Time
 		var err error
 		if input[2:] == "2400" {
@@ -161,14 +160,12 @@ func (trend *Trend) setPeriodOfChanges(input string) (ok bool) {
 		}
 		if err == nil {
 			trend.TL = t
-			ok = true
+			return true
 		} else {
 			log.Println(err)
 		}
-	default:
-		return
 	}
-	return
+	return false
 }
 
 func (trend *Trend) setTypeOfTrend(input string) bool {
