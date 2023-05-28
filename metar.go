@@ -34,43 +34,35 @@ func init() {
 
 // MetarMessage - Meteorological report presented as a data structure
 type MetarMessage struct {
-	rawData                      string            `json:"raw_data"`  // The raw METAR
-	COR                          bool              `json:"corrected"` // Correction to observation
-	Station                      string            `json:"station"`   // 4-letter ICAO station identifier
-	DateTime                     time.Time         `json:"issued"`    // Time (in ISO8601 date/time format) this METAR was observed
-	Auto                         bool              `json:"auto"`      // METAR from automatic observing systems with no human intervention
-	NIL                          bool              `json:"nil"`       // event of missing METAR
-	wind.Wind                    `json:"wind"`     //	Surface wind
-	CAVOK                        bool              `json:"cavok"` // Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
-	vis.Visibility                                 // Horizontal visibility
-	RWYvisibility                []rwy.VisualRange // Runway visual range
-	ph.Phenomena                                   // Present Weather
-	PhenomenaNotDefined          bool              `json:"phenomena_not_defined"`           // Not detected by the automatic station - “//”
-	VerticalVisibility           int               `json:"vertical_visibility"`             // Vertical visibility (ft)
-	VerticalVisibilityNotDefined bool              `json:"vertical_visibility_not_defined"` // “///”
-	clouds.Clouds                                  // Cloud amount and height
-	Temperature                  int               `json:"temperature"`
-	Dewpoint                     int               `json:"dew_point"` // Dew point in degrees Celsius
-	QNHhPa                       int               `json:"qnh_hpa"`   // Altimeter setting.  Atmospheric pressure adjusted to mean sea level
-	// Supplementary informaton
-	//Recent weather
-	RecentPhenomena ph.Phenomena
-	// Information on the state of the runway(s)
-	RWYState []rwy.State
-	// Wind shear on runway(s)
-	WindShear []rwy.RunwayDesignator
-	// Prevision
-	TREND []Trend
-	//OR NO SIGnificant changes coming within the next two hours
-	NOSIG bool `json:"no_sig"`
-	// Remarks consisting of recent operationally significant weather as well as additive and automated maintenance data
-	Remarks *Remark
-	// An array of tokens that couldn't be decoded
-	NotDecodedTokens []string `json:"not_decoded_tokens"`
+	RawData                      string                 `json:"raw_data"`  // The raw METAR
+	COR                          bool                   `json:"corrected"` // Correction to observation
+	Station                      string                 `json:"station"`   // 4-letter ICAO station identifier
+	DateTime                     time.Time              `json:"issued"`    // Time (in ISO8601 date/time format) this METAR was observed
+	Auto                         bool                   `json:"auto"`      // METAR from automatic observing systems with no human intervention
+	NIL                          bool                   `json:"nil"`       // event of missing METAR
+	wind.Wind                                           //	Surface wind
+	CAVOK                        bool                   `json:"cavok"` // Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
+	vis.Visibility                                      // Horizontal visibility
+	RWYvisibility                []rwy.VisualRange      // Runway visual range
+	ph.Phenomena                                        // Present Weather
+	PhenomenaNotDefined          bool                   `json:"phenomena_not_defined"`           // Not detected by the automatic station - “//”
+	VerticalVisibility           int                    `json:"vertical_visibility"`             // Vertical visibility (ft)
+	VerticalVisibilityNotDefined bool                   `json:"vertical_visibility_not_defined"` // “///”
+	clouds.Clouds                                       // Cloud amount and height
+	Temperature                  int                    `json:"temperature"`
+	Dewpoint                     int                    `json:"dew_point"` // Dew point in degrees Celsius
+	QNHhPa                       int                    `json:"qnh_hpa"`   // Altimeter setting.  Atmospheric pressure adjusted to mean sea level
+	RecentPhenomena              ph.Phenomena           `json:"recent_phenomena"`
+	RWYState                     []rwy.State            `json:"runway_state"`
+	WindShear                    []rwy.RunwayDesignator `json:"wind_shear"`
+	TREND                        []Trend                `json:"trend"`
+	NOSIG                        bool                   `json:"no_sig"`             //OR NO SIGnificant changes coming within the next two hours
+	Remarks                      *Remark                `json:"remarks"`            //OR NO SIGnificant changes coming within the next two hours
+	NotDecodedTokens             []string               `json:"not_decoded_tokens"` // An array of tokens that couldn't be decoded
 }
 
 // RAW - returns the original message text
-func (m *MetarMessage) RAW() string { return m.rawData }
+func (m *MetarMessage) RAW() string { return m.RawData }
 
 func (m *MetarMessage) appendTrend(input []string) {
 	if trend := parseTrendData(input); trend != nil {
@@ -82,10 +74,10 @@ func (m *MetarMessage) appendTrend(input []string) {
 func NewMETAR(inputtext string) (*MetarMessage, error) {
 
 	m := &MetarMessage{
-		rawData: inputtext,
+		RawData: inputtext,
 	}
 	headerRx := myRegexp{regexp.MustCompile(`^(?P<type>(METAR|SPECI)\s)?(?P<cor>COR\s)?(?P<station>\w{4})\s(?P<time>\d{6}Z)(?P<auto>\sAUTO)?(?P<nil>\sNIL)?`)}
-	headermap := headerRx.FindStringSubmatchMap(m.rawData)
+	headermap := headerRx.FindStringSubmatchMap(m.RawData)
 	m.Station = headermap["station"]
 	m.DateTime, _ = time.Parse("200601021504Z", CurYearStr+CurMonthStr+headermap["time"])
 	m.COR = headermap["cor"] != ""
@@ -97,7 +89,7 @@ func NewMETAR(inputtext string) (*MetarMessage, error) {
 	if m.NIL {
 		return m, nil
 	}
-	tokens := strings.Split(m.rawData, " ")
+	tokens := strings.Split(m.RawData, " ")
 	count := 0
 	totalcount := len(tokens)
 	// skip station info, date/time, etc.
