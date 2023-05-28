@@ -43,12 +43,12 @@ type MetarMessage struct {
 	wind.Wind                                           //	Surface wind
 	CAVOK                        bool                   `json:"cavok"` // Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
 	vis.Visibility                                      // Horizontal visibility
-	RWYvisibility                []rwy.VisualRange      // Runway visual range
-	ph.Phenomena                                        // Present Weather
+	RWYvisibility                []rwy.VisualRange      `json:"visual_range"` // Runway visual range
+	ph.Phenomena                 `json:"phenomena"`     // Present Weather
 	PhenomenaNotDefined          bool                   `json:"phenomena_not_defined"`           // Not detected by the automatic station - “//”
 	VerticalVisibility           int                    `json:"vertical_visibility"`             // Vertical visibility (ft)
 	VerticalVisibilityNotDefined bool                   `json:"vertical_visibility_not_defined"` // “///”
-	clouds.Clouds                                       // Cloud amount and height
+	clouds.Clouds                `json:"clouds"`        // Cloud amount and height
 	Temperature                  int                    `json:"temperature"`
 	Dewpoint                     int                    `json:"dew_point"` // Dew point in degrees Celsius
 	QNHhPa                       int                    `json:"qnh_hpa"`   // Altimeter setting.  Atmospheric pressure adjusted to mean sea level
