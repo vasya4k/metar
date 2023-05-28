@@ -24,8 +24,8 @@ const (
 
 // RunwayDesignator - two-digit runway number
 type RunwayDesignator struct {
-	Number     string
-	AllRunways bool
+	Number     string `json:"number"`
+	AllRunways bool   `json:"all_runways"`
 }
 
 // NewRD - construct new runway designator
@@ -54,18 +54,17 @@ type VisualRange struct {
 
 // State - runway condition representation
 type State struct {
-	Designator                RunwayDesignator
-	TypeOfCoverage            int
-	TypeOfCoverageNotDef      bool
-	DimensionOfCoverage       int
-	DimensionOfCoverageNotDef bool
-	HeightOfCoverage          int
-	HeightOfCoverageNotDef    bool
-	// Friction coefficient and braking action
-	BrakingConditions           int
-	BrakingConditionsNotDefined bool
-	CLRD                        bool
-	SNOCLO                      bool
+	Designator                  RunwayDesignator
+	TypeOfCoverage              int  `json:"type_of_coverage"`
+	TypeOfCoverageNotDef        bool `json:"type_of_coverage_not_def"`
+	DimensionOfCoverage         int  `json:"dimension_of_coverage"`
+	DimensionOfCoverageNotDef   bool `json:"dimension_of_coverage_not_def"`
+	HeightOfCoverage            int  `json:"height_of_coverage"`
+	HeightOfCoverageNotDef      bool `json:"height_of_coverage_not_def"`
+	BrakingConditions           int  `json:"braking_conditions"` // Friction coefficient and braking action
+	BrakingConditionsNotDefined bool `json:"braking_conditions_not_defined"`
+	CLRD                        bool `json:"clrd"`
+	SNOCLO                      bool `json:"snoclo"`
 }
 
 // ParseVisualRange - identify and parses the representation of runway visual range

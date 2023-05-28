@@ -26,7 +26,7 @@ const (
 
 // Trend - forecast of changes for a specified period
 type Trend struct {
-	Type        TypeTrend `json:"type_trend"`
+	Type        TypeTrend `json:"trend_type"`
 	Probability int       `json:"probability"`
 	// used only in TAFs. Maybe only 30 or 40. The PROBdd group is not used in conjunction with BECMG and FM
 	// In case of in metar use values indicated time of changes. hh:mm (BECMG FM1030 TL1130)
@@ -41,9 +41,9 @@ type Trend struct {
 	VerticalVisibility           int  `json:"vertical_visibility"`
 	VerticalVisibilityNotDefined bool `json:"vertical_visibility_not_defined"`
 	wind.Wind
-	CAVOK bool `json:"cavok"`
-	ph.Phenomena
-	clouds.Clouds
+	CAVOK         bool `json:"cavok"`
+	ph.Phenomena  `json:"phenomena"`
+	clouds.Clouds `json:"clouds"`
 }
 
 func parseTrendData(tokens []string) (trend *Trend) {

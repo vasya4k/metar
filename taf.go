@@ -22,29 +22,24 @@ type TemperatureForecast struct {
 
 // TAFMessage - Terminal Aerodrome Forecast struct
 type TAFMessage struct {
-	rawData   string    // The raw TAF
-	COR       bool      // Correction of forecast due to a typo
-	AMD       bool      // Amended forecast
-	NIL       bool      // event of missing TAF
-	Station   string    // 4-letter ICAO station identifier
-	DateTime  time.Time // Time( in ISO8601 date/time format) this TAF was issued
-	ValidFrom time.Time
-	ValidTo   time.Time
-	CNL       bool // The previously issued TAF for the period was cancelled
-
-	wind.Wind //	Surface wind
-	// Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector
-	// altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
-	CAVOK              bool
+	rawData            string                `json:"raw_data"`  // The raw TAF
+	COR                bool                  `json:"corrected"` // Correction of forecast due to a typo
+	AMD                bool                  `json:"amended"`   // Amended forecast
+	NIL                bool                  `json:"nil"`       // event of missing TAF
+	Station            string                `json:"station"`   // 4-letter ICAO station identifier
+	DateTime           time.Time             `json:"date_time"` // Time( in ISO8601 date/time format) this TAF was issued
+	ValidFrom          time.Time             `json:"valid_from"`
+	ValidTo            time.Time             `json:"valid_to"`
+	CNL                bool                  `json:"cancelled"` // The previously issued TAF for the period was cancelled
+	wind.Wind                                //	Surface wind
+	CAVOK              bool                  `json:"cavok"` // Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
 	v.Visibility                             // Horizontal visibility
-	ph.Phenomena                             // Present Weather
-	VerticalVisibility int                   // Vertical visibility (ft)
-	clouds.Clouds                            // Cloud amount and height
-	Temperature        []TemperatureForecast // Temperature extremes
-	// Prevision
-	TREND []Trend
-
-	NotDecodedTokens []string
+	ph.Phenomena       `json:"phenomena"`    // Present Weather
+	VerticalVisibility int                   `json:"vertical_visibility"` // Vertical visibility (ft)
+	clouds.Clouds      `json:"clouds"`       // Cloud amount and height
+	Temperature        []TemperatureForecast `json:"temperature_forecast"` // Temperature extremes
+	TREND              []Trend               `json:"trend"`
+	NotDecodedTokens   []string              `json:"not_decoded_tokens"`
 }
 
 // NewTAF - creates a new TAF forecast based on the original message

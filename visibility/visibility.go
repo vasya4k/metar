@@ -22,10 +22,8 @@ const (
 
 // Distance in units of measure
 type Distance struct {
-	// By default, meters. Or feet in US RVR. Both integer
-	Value int `json:"value"`
-	// Used only for horizontal visibility in miles
-	FractionValue float64 `json:"fraction_value"`
+	Value         int     `json:"value"`          // By default, meters. Or feet in US RVR. Both integer
+	FractionValue float64 `json:"fraction_value"` // Used only for horizontal visibility in miles
 	Unit          `json:"unit"`
 }
 
@@ -42,8 +40,8 @@ type BaseVisibility struct {
 type Visibility struct {
 	BaseVisibility
 	// sector visibility
-	LowerDistance  Distance
-	LowerDirection string `json:"lower_direction"`
+	LowerDistance  Distance `json:"lower_distance"`
+	LowerDirection string   `json:"lower_direction"`
 }
 
 // Meters - returns the distance in meters

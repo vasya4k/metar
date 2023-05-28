@@ -11,16 +11,16 @@ import (
 // Remark - Additional information not included in the main message
 type Remark struct {
 	WindOnRWY []WindOnRWY
-	QBB       int  // Cloud base in meters
-	МТOBSC    bool // Mountains obscured
-	MASTOBSC  bool // Mast obscured
-	OBSTOBSC  bool // Obstacle obscured
-	QFE       int  // Q-code Field Elevation (mmHg)
+	QBB       int  `json:"qbb"`      // Cloud base in meters
+	МТOBSC    bool `json:"мтobsc"`   // Mountains obscured
+	MASTOBSC  bool `json:"mastobsc"` // Mast obscured
+	OBSTOBSC  bool `json:"obstobsc"` // Obstacle obscured
+	QFE       int  `json:"qfe"`      // Q-code Field Elevation (mmHg)
 }
 
 // WindOnRWY - surface wind observations on the runways
 type WindOnRWY struct {
-	Runway string
+	Runway string `json:"runway"`
 	wind.Wind
 }
 

@@ -34,26 +34,24 @@ func init() {
 
 // MetarMessage - Meteorological report presented as a data structure
 type MetarMessage struct {
-	rawData   string    // The raw METAR
-	COR       bool      // Correction to observation
-	Station   string    // 4-letter ICAO station identifier
-	DateTime  time.Time // Time (in ISO8601 date/time format) this METAR was observed
-	Auto      bool      // METAR from automatic observing systems with no human intervention
-	NIL       bool      // event of missing METAR
-	wind.Wind           //	Surface wind
-	// Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector
-	// altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
-	CAVOK                        bool
+	rawData                      string            `json:"raw_data"`  // The raw METAR
+	COR                          bool              `json:"corrected"` // Correction to observation
+	Station                      string            `json:"station"`   // 4-letter ICAO station identifier
+	DateTime                     time.Time         `json:"issued"`    // Time (in ISO8601 date/time format) this METAR was observed
+	Auto                         bool              `json:"auto"`      // METAR from automatic observing systems with no human intervention
+	NIL                          bool              `json:"nil"`       // event of missing METAR
+	wind.Wind                    `json:"wind"`     //	Surface wind
+	CAVOK                        bool              `json:"cavok"` // Ceiling And Visibility OK, indicating no cloud below 5,000 ft (1,500 m) or the highest minimum sector altitude and no cumulonimbus or towering cumulus at any level, a visibility of 10 km (6 mi) or more and no significant weather change.
 	vis.Visibility                                 // Horizontal visibility
 	RWYvisibility                []rwy.VisualRange // Runway visual range
 	ph.Phenomena                                   // Present Weather
-	PhenomenaNotDefined          bool              // Not detected by the automatic station - “//”
-	VerticalVisibility           int               // Vertical visibility (ft)
-	VerticalVisibilityNotDefined bool              // “///”
+	PhenomenaNotDefined          bool              `json:"phenomena_not_defined"`           // Not detected by the automatic station - “//”
+	VerticalVisibility           int               `json:"vertical_visibility"`             // Vertical visibility (ft)
+	VerticalVisibilityNotDefined bool              `json:"vertical_visibility_not_defined"` // “///”
 	clouds.Clouds                                  // Cloud amount and height
-	Temperature                  int               // Temperature in degrees Celsius
-	Dewpoint                     int               // Dew point in degrees Celsius
-	QNHhPa                       int               // Altimeter setting.  Atmospheric pressure adjusted to mean sea level
+	Temperature                  int               `json:"temperature"`
+	Dewpoint                     int               `json:"dew_point"` // Dew point in degrees Celsius
+	QNHhPa                       int               `json:"qnh_hpa"`   // Altimeter setting.  Atmospheric pressure adjusted to mean sea level
 	// Supplementary informaton
 	//Recent weather
 	RecentPhenomena ph.Phenomena
@@ -64,11 +62,11 @@ type MetarMessage struct {
 	// Prevision
 	TREND []Trend
 	//OR NO SIGnificant changes coming within the next two hours
-	NOSIG bool
+	NOSIG bool `json:"no_sig"`
 	// Remarks consisting of recent operationally significant weather as well as additive and automated maintenance data
 	Remarks *Remark
 	// An array of tokens that couldn't be decoded
-	NotDecodedTokens []string
+	NotDecodedTokens []string `json:"not_decoded_tokens"`
 }
 
 // RAW - returns the original message text
