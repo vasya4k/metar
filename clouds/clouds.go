@@ -10,13 +10,13 @@ import (
 
 // Cloud - cloud representation
 type Cloud struct {
-	Type CloudType
+	Type CloudType `json:"cloud_type"`
 	// the height is stored in hundreds of feet, as Flight Level
-	height           int
-	HeightNotDefined bool
-	Cumulonimbus     bool
-	ToweringCumulus  bool
-	CBNotDefined     bool
+	Height           int  `json:"height"`
+	HeightNotDefined bool `json:"height_not_defined"`
+	Cumulonimbus     bool `json:"cumulonimbus"`
+	ToweringCumulus  bool `json:"towering_cumulus"`
+	CBNotDefined     bool `json:"cb_not_defined"`
 }
 
 // Clouds - an array of heights and types of clouds
@@ -50,12 +50,12 @@ const (
 
 // HeightM - returns height above surface of the lower base of cloudiness in meters
 func (cl Cloud) HeightM() int {
-	return cnv.FtToM(cl.height * 100)
+	return cnv.FtToM(cl.Height * 100)
 }
 
 // HeightFt - returns height above surface of the lower base of cloudiness in feet
 func (cl Cloud) HeightFt() int {
-	return cl.height * 100
+	return cl.Height * 100
 }
 
 // ParseCloud - identify and parses the representation of cloudiness in the string
@@ -74,7 +74,7 @@ func ParseCloud(token string) (cl Cloud, ok bool) {
 	}
 
 	if matches[2] != "///" && matches[2] != "" {
-		cl.height, _ = strconv.Atoi(matches[2])
+		cl.Height, _ = strconv.Atoi(matches[2])
 	} else {
 		cl.HeightNotDefined = true
 	}

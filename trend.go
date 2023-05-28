@@ -1,6 +1,7 @@
 package metar
 
 import (
+	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -26,18 +27,22 @@ const (
 
 // Trend - forecast of changes for a specified period
 type Trend struct {
-	Type        TypeTrend
-	Probability int // used only in TAFs. Maybe only 30 or 40. The PROBdd group is not used in conjunction with BECMG and FM
+	Type        TypeTrend `json:"type_trend"`
+	Probability int       `json:"probability"`
+	// used only in TAFs. Maybe only 30 or 40. The PROBdd group is not used in conjunction with BECMG and FM
 	// In case of in metar use values indicated time of changes. hh:mm (BECMG FM1030 TL1130)
 	// In TAFs used from - until fields as date/time. ddhh/ddhh (TEMPO 2208/2218)
-	FM time.Time // FroM (time)
-	TL time.Time // unTiL (time)
-	AT time.Time // AT time
+	FM time.Time `json:"from_time"`
+	// FroM (time)
+	TL time.Time `json:"till_time"`
+	// unTiL (time)
+	AT time.Time `json:"at_time"`
+	// AT time
 	v.Visibility
-	VerticalVisibility           int
-	VerticalVisibilityNotDefined bool
+	VerticalVisibility           int  `json:"vertical_visibility"`
+	VerticalVisibilityNotDefined bool `json:"vertical_visibility_not_defined"`
 	wind.Wind
-	CAVOK bool
+	CAVOK bool `json:"cavok"`
 	ph.Phenomena
 	clouds.Clouds
 }
@@ -127,6 +132,7 @@ func (trend *Trend) setProbability(input string) bool {
 }
 
 func (trend *Trend) setPeriodOfChanges(input string) (ok bool) {
+	fmt.Println(input)
 	switch input[0:2] {
 	case "AT":
 		timeofaction, err := time.Parse("200601021504", CurYearStr+CurMonthStr+CurDayStr+input[2:])

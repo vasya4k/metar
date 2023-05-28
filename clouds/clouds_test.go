@@ -48,14 +48,14 @@ func TestParseCloud(t *testing.T) {
 		Convey("height in feet must calculated correctly", func() {
 			for _, pair := range tests {
 				cloud, _ := ParseCloud(pair.input)
-				So(cloud.HeightFt(), ShouldEqual, pair.expected.height*100)
+				So(cloud.HeightFt(), ShouldEqual, pair.expected.Height*100)
 			}
 		})
 
 		Convey("height in meters must calculated correctly", func() {
 			for _, pair := range tests {
 				cloud, _ := ParseCloud(pair.input)
-				So(cloud.HeightM(), ShouldEqual, FtToM(pair.expected.height*100))
+				So(cloud.HeightM(), ShouldEqual, FtToM(pair.expected.Height*100))
 			}
 		})
 

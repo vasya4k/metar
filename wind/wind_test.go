@@ -46,14 +46,14 @@ func TestParseWind(t *testing.T) {
 				wnd.ParseWind(pair.input)
 				switch wnd.unit {
 				case KPH, KMH:
-					So(wnd.SpeedMps(), ShouldAlmostEqual, KphToMps(wnd.speed), .5)
-					So(wnd.GustsSpeedMps(), ShouldAlmostEqual, KphToMps(wnd.gustsSpeed), .5)
+					So(wnd.SpeedMps(), ShouldAlmostEqual, KphToMps(wnd.Speed), .5)
+					So(wnd.GustsSpeedMps(), ShouldAlmostEqual, KphToMps(wnd.GustsSpeed), .5)
 				case KT:
-					So(wnd.SpeedMps(), ShouldAlmostEqual, KtsToMps(float64(wnd.speed)), .5)
-					So(wnd.GustsSpeedMps(), ShouldAlmostEqual, KtsToMps(float64(wnd.gustsSpeed)), .5)
+					So(wnd.SpeedMps(), ShouldAlmostEqual, KtsToMps(float64(wnd.Speed)), .5)
+					So(wnd.GustsSpeedMps(), ShouldAlmostEqual, KtsToMps(float64(wnd.GustsSpeed)), .5)
 				case MPS:
-					So(wnd.SpeedMps(), ShouldEqual, wnd.speed)
-					So(wnd.GustsSpeedMps(), ShouldEqual, wnd.gustsSpeed)
+					So(wnd.SpeedMps(), ShouldEqual, wnd.Speed)
+					So(wnd.GustsSpeedMps(), ShouldEqual, wnd.GustsSpeed)
 				}
 			}
 		})
@@ -64,14 +64,14 @@ func TestParseWind(t *testing.T) {
 				wnd.ParseWind(pair.input)
 				switch wnd.unit {
 				case MPS:
-					So(wnd.SpeedKt(), ShouldAlmostEqual, MpsToKts(float64(wnd.speed)), .5)
-					So(wnd.GustsSpeedKt(), ShouldAlmostEqual, MpsToKts(float64(wnd.gustsSpeed)), .5)
+					So(wnd.SpeedKt(), ShouldAlmostEqual, MpsToKts(float64(wnd.Speed)), .5)
+					So(wnd.GustsSpeedKt(), ShouldAlmostEqual, MpsToKts(float64(wnd.GustsSpeed)), .5)
 				case KPH, KMH:
-					So(wnd.SpeedKt(), ShouldAlmostEqual, KphToKts(wnd.speed), .5)
-					So(wnd.GustsSpeedKt(), ShouldAlmostEqual, KphToKts(wnd.gustsSpeed), .5)
+					So(wnd.SpeedKt(), ShouldAlmostEqual, KphToKts(wnd.Speed), .5)
+					So(wnd.GustsSpeedKt(), ShouldAlmostEqual, KphToKts(wnd.GustsSpeed), .5)
 				case KT:
-					So(wnd.SpeedKt(), ShouldEqual, wnd.speed)
-					So(wnd.GustsSpeedKt(), ShouldEqual, wnd.gustsSpeed)
+					So(wnd.SpeedKt(), ShouldEqual, wnd.Speed)
+					So(wnd.GustsSpeedKt(), ShouldEqual, wnd.GustsSpeed)
 				}
 
 			}

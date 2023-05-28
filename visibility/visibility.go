@@ -23,17 +23,19 @@ const (
 // Distance in units of measure
 type Distance struct {
 	// By default, meters. Or feet in US RVR. Both integer
-	Value int
+	Value int `json:"value"`
 	// Used only for horizontal visibility in miles
-	FractionValue float64
-	Unit
+	FractionValue float64 `json:"fraction_value"`
+	Unit          `json:"unit"`
 }
 
 // BaseVisibility - the basis of visibility: one measurement
 type BaseVisibility struct {
 	Distance
-	AboveMax bool // more than reported value (P5000, P6SM...)
-	BelowMin bool // less than reported value (M1/4SM, M0050...)
+	// more than reported value (P5000, P6SM...)
+	AboveMax bool `json:"above_max"`
+	// less than reported value (M1/4SM, M0050...)
+	BelowMin bool `json:"below_min"`
 }
 
 // Visibility - prevailing visibility
@@ -41,7 +43,7 @@ type Visibility struct {
 	BaseVisibility
 	// sector visibility
 	LowerDistance  Distance
-	LowerDirection string
+	LowerDirection string `json:"lower_direction"`
 }
 
 // Meters - returns the distance in meters

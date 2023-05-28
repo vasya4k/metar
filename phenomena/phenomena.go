@@ -26,9 +26,9 @@ const (
 // Phenomenon - Weather phenomenon with intensity/proximity indicator
 type Phenomenon struct {
 	// proximity indicator
-	Vicinity     bool
-	Intensity    Intensity
-	Abbreviation string
+	Vicinity     bool      `json:"vicinity"`
+	Intensity    Intensity `json:"intensity"`
+	Abbreviation string    `json:"abbreviation"`
 }
 
 // Phenomena - List of current or past weather events

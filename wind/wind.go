@@ -23,36 +23,36 @@ const (
 
 // Wind - wind on surface representation
 type Wind struct {
-	WindDirection       int
-	speed               int
-	gustsSpeed          int
-	Variable            bool
-	VariableFrom        int
-	VariableTo          int
-	Above50MPS          bool
-	SpeedNotDefined     bool
-	DirectionNotDefined bool
-	unit                speedUnit
+	WindDirection       int       `json:"wind_direction"`
+	Speed               int       `json:"speed"`
+	GustsSpeed          int       `json:"gusts_speed"`
+	Variable            bool      `json:"variable"`
+	VariableFrom        int       `json:"variable_from"`
+	VariableTo          int       `json:"variable_to"`
+	Above50MPS          bool      `json:"above50mps"`
+	SpeedNotDefined     bool      `json:"speed_not_defined"`
+	DirectionNotDefined bool      `json:"direction_not_defined"`
+	unit                speedUnit `json:"unit"`
 }
 
 // SpeedKt - returns wind speed in knots. In Russian messages, the speed is specified in m/s, but it makes sense to receive it in knots for aviation purposes
 func (w *Wind) SpeedKt() (speed int) {
-	return getSpeedValue(w.speed, w.unit, KT)
+	return getSpeedValue(w.Speed, w.unit, KT)
 }
 
 // SpeedMps - returns wind speed in meters per second.
 func (w *Wind) SpeedMps() (speed int) {
-	return getSpeedValue(w.speed, w.unit, MPS)
+	return getSpeedValue(w.Speed, w.unit, MPS)
 }
 
 // GustsSpeedKt - returns gusts speed in knots.
 func (w *Wind) GustsSpeedKt() (speed int) {
-	return getSpeedValue(w.gustsSpeed, w.unit, KT)
+	return getSpeedValue(w.GustsSpeed, w.unit, KT)
 }
 
 // GustsSpeedMps - returns gusts speed in meters per second.
 func (w *Wind) GustsSpeedMps() (speed int) {
-	return getSpeedValue(w.gustsSpeed, w.unit, MPS)
+	return getSpeedValue(w.GustsSpeed, w.unit, MPS)
 }
 
 func getSpeedValue(speed int, unit speedUnit, needUnit speedUnit) (result int) {
@@ -91,10 +91,10 @@ func (w *Wind) ParseWind(token string) (tokensused int) {
 	w.Above50MPS = matches[2] != ""
 	w.SpeedNotDefined = matches[3] == "//"
 	if matches[3] != "" && !w.SpeedNotDefined {
-		w.speed, _ = strconv.Atoi(matches[3])
+		w.Speed, _ = strconv.Atoi(matches[3])
 	}
 	if matches[4] != "" {
-		w.gustsSpeed, _ = strconv.Atoi(matches[4][1:])
+		w.GustsSpeed, _ = strconv.Atoi(matches[4][1:])
 	}
 	w.unit = speedUnit(matches[5])
 	// Two tokens have been used
