@@ -22,7 +22,7 @@ type TemperatureForecast struct {
 
 // TAFMessage - Terminal Aerodrome Forecast struct
 type TAFMessage struct {
-	rawData            string                `json:"raw_data"`  // The raw TAF
+	RawData            string                `json:"raw_data"`  // The raw TAF
 	COR                bool                  `json:"corrected"` // Correction of forecast due to a typo
 	AMD                bool                  `json:"amended"`   // Amended forecast
 	NIL                bool                  `json:"nil"`       // event of missing TAF
@@ -45,10 +45,10 @@ type TAFMessage struct {
 // NewTAF - creates a new TAF forecast based on the original message
 func NewTAF(inputtext string) *TAFMessage {
 	t := &TAFMessage{
-		rawData: inputtext,
+		RawData: inputtext,
 	}
 	headerRx := myRegexp{regexp.MustCompile(`^(?P<taf>TAF\s)?(?P<cor>COR\s)?(?P<amd>AMD\s)?(?P<station>\w{4})\s(?P<time>\d{6}Z)(?P<nil>\sNIL)?(\s(?P<from>\d{4})/(?P<to>\d{4}))?(?P<cnl>\sCNL)?`)}
-	headermap := headerRx.FindStringSubmatchMap(t.rawData)
+	headermap := headerRx.FindStringSubmatchMap(t.RawData)
 	t.Station = headermap["station"]
 	t.DateTime, _ = time.Parse("200601021504Z", CurYearStr+CurMonthStr+headermap["time"])
 	t.COR = headermap["cor"] != ""
@@ -57,7 +57,7 @@ func NewTAF(inputtext string) *TAFMessage {
 	t.CNL = headermap["cnl"] != ""
 	if t.Station == "" && t.DateTime.IsZero() {
 		//not valid message?
-		t.NotDecodedTokens = append(t.NotDecodedTokens, t.rawData)
+		t.NotDecodedTokens = append(t.NotDecodedTokens, t.RawData)
 		return t
 	}
 	if t.NIL { // End of TAF, if the forecast is lost
@@ -67,7 +67,7 @@ func NewTAF(inputtext string) *TAFMessage {
 	if t.CNL { // End of TAF, if the forecast is cancelled
 		return t
 	}
-	tokens := strings.Split(t.rawData, " ")
+	tokens := strings.Split(t.RawData, " ")
 
 	position := 0
 	for key, value := range headermap {
@@ -81,7 +81,7 @@ func NewTAF(inputtext string) *TAFMessage {
 }
 
 // RAW - returns the original message text
-func (t *TAFMessage) RAW() string { return t.rawData }
+func (t *TAFMessage) RAW() string { return t.RawData }
 
 func (t *TAFMessage) decodeTAF(tokens []string) {
 
