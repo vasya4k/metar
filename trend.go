@@ -1,7 +1,6 @@
 package metar
 
 import (
-	"log"
 	"regexp"
 	"strings"
 	"time"
@@ -44,6 +43,7 @@ type Trend struct {
 	CAVOK         bool `json:"cavok"`
 	ph.Phenomena  `json:"phenomena"`
 	clouds.Clouds `json:"clouds"`
+	ParsingErrors []error `json:"parsing_errors"`
 }
 
 func parseTrendData(tokens []string) (trend *Trend) {
@@ -89,14 +89,14 @@ func (trend *Trend) setDateTime(input string) (ok bool) {
 		if err == nil {
 			trend.FM = t
 		} else {
-			log.Println(err)
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
 			ok = false
 		}
 		t, err = parseTime(matches[2])
 		if err == nil {
 			trend.TL = t
 		} else {
-			log.Println(err)
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
 			ok = false
 		}
 	}
@@ -137,7 +137,7 @@ func (trend *Trend) setPeriodOfChanges(input string) bool {
 			trend.AT = timeofaction
 			return true
 		} else {
-			log.Println(err)
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
 		}
 	}
 	if strings.HasPrefix(input, "FM") {
@@ -146,7 +146,7 @@ func (trend *Trend) setPeriodOfChanges(input string) bool {
 			trend.FM = timeofaction
 			return true
 		} else {
-			log.Println(err)
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
 		}
 	}
 	if strings.HasPrefix(input, "TL") {
@@ -155,6 +155,8 @@ func (trend *Trend) setPeriodOfChanges(input string) bool {
 		if input[2:] == "2400" {
 			t, err = time.Parse("200601021504", CurYearStr+CurMonthStr+CurDayStr+"2300")
 			t = t.Add(time.Hour)
+		} else if len(input) > 6 {
+			t, err = time.Parse("200601021504", CurYearStr+CurMonthStr+input[2:])
 		} else {
 			t, err = time.Parse("200601021504", CurYearStr+CurMonthStr+CurDayStr+input[2:])
 		}
@@ -162,20 +164,23 @@ func (trend *Trend) setPeriodOfChanges(input string) bool {
 			trend.TL = t
 			return true
 		} else {
-			log.Println(err)
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
 		}
 	}
 	return false
 }
 
 func (trend *Trend) setTypeOfTrend(input string) bool {
-
+	var err error
 	if input == TEMPO || input == BECMG {
 		trend.Type = TypeTrend(input)
 		return true
 	} else if strings.HasPrefix(input, "FM") {
 		trend.Type = FM
-		trend.FM, _ = time.Parse("200601021504", CurYearStr+CurMonthStr+input[2:])
+		trend.FM, err = time.Parse("200601021504", CurYearStr+CurMonthStr+input[2:])
+		if err != nil {
+			trend.ParsingErrors = append(trend.ParsingErrors, err)
+		}
 		return true
 	}
 	return false
