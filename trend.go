@@ -59,6 +59,9 @@ func parseTrendData(tokens []string) (trend *Trend) {
 		}
 		// AT, FM, TL used in METAR trends
 		for trend.setPeriodOfChanges(tokens[count]) {
+			if count == len(tokens)-1 {
+				break
+			}
 			count++
 		}
 		// date/time for TAF

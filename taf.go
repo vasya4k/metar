@@ -181,6 +181,9 @@ func (t *TAFMessage) findTrendsInMessage(tokens []string, startposition int) (en
 			trends = append([][]string{tokens[i:endposition]}, trends[0:]...)
 			endposition = i
 		}
+		if tokens[i] == "RMK" {
+			trends = nil
+		}
 	}
 	for _, trendstr := range trends {
 		if trend := parseTrendData(trendstr); trend != nil {
